@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 {
     std::cout << "Initializing flecs!\n";
     flecs::world ecs;
+    ecs.set<flecs::Rest>({});
 
     ecs.system<Position, const Velocity>()
         .each([](Position &p, const Velocity &v)
