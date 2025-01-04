@@ -16,7 +16,7 @@ struct Velocity
 
 int main(int argc, char *argv[])
 {
-    std::cout << "Initializing flecs\n";
+    std::cout << "initializing...\n";
     flecs::world ecs;
     ecs.set<flecs::Rest>({});
     ecs_set_target_fps(ecs, FPS);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     while (ecs.progress())
     {
-        std::cout << "FLECS progressed\n";
+        std::cout << "flecs progress()\n";
     }
-    std::cout << "Exiting\n";
+    std::cout << "exiting\n";
 }

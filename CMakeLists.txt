@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(flecstest1 VERSION 0.1.0 LANGUAGES C CXX)
+project(flecsadora VERSION 0.1.0 LANGUAGES C CXX)
 
 file(GLOB_RECURSE SOURCES
     src/*.h
@@ -7,5 +7,5 @@ file(GLOB_RECURSE SOURCES
     src/*.cpp
 )
 
-add_executable(flecstest1 ${SOURCES})
+add_executable(flecsadora ${SOURCES})
 
