@@ -1,40 +1,42 @@
+#include <ctime>
 #include <iostream>
 
 #include "flecs.h"
 
-float FPS = 6.0f;
+const float FPS = 2.0f;
+const int WIDTH = 100;
 
 struct Position
 {
     float x, y;
 };
 
-struct Velocity
-{
-    float x, y;
-};
+enum EntityType { predator, prey };
+
+void createEntity(const flecs::world &ecs, const EntityType &entityType){
+    ecs.entity()
+        .insert([](Position &p, EntityType &entityType)
+                {
+      p = {(float)(std::rand() % WIDTH), (float)(std::rand() % WIDTH)};
+      entityType = entityType;});
+}
 
 int main(int argc, char *argv[])
 {
     std::cout << "initializing...\n";
+    std::srand(std::time(nullptr));
+
     flecs::world ecs;
     ecs.set<flecs::Rest>({});
     ecs_set_target_fps(ecs, FPS);
+    for(int i=0; i<10; i++){
+        createEntity(ecs, predator);
+    }
+    for(int i=0; i<100; i++){
+        createEntity(ecs, prey);
+    }
 
-    ecs.system<Position, const Velocity>()
-        .each([](Position &p, const Velocity &v)
-              {
-      p.x += v.x;
-      p.y += v.y; });
-
-    ecs.entity()
-        .insert([](Position &p, Velocity &v)
-                {
-      p = {10, 20};
-      v = {1, 2}; });
-
-    while (ecs.progress())
-    {
+    while (ecs.progress()){
         std::cout << "flecs progress()\n";
     }
     std::cout << "exiting\n";
